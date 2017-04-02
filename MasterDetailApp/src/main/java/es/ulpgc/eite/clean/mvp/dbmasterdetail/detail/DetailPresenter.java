@@ -205,7 +205,7 @@ public class DetailPresenter extends GenericPresenter
     }
   }
 
-
+//clase Observable
   private static class DetailObservable extends Observable {
     @Override
     public synchronized void setChanged() {
