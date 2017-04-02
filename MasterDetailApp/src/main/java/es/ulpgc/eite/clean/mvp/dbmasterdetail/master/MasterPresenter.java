@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.util.Log;
 
 import java.util.List;
+import java.util.Observable;
 
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
@@ -26,6 +27,7 @@ public class MasterPresenter extends GenericPresenter
   private ModelItem itemToDelete;
   //private boolean hideContent;
   private boolean hideProgress;
+  public  MasterObservable mobservable ;
 
   /**
    * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
@@ -39,10 +41,12 @@ public class MasterPresenter extends GenericPresenter
   public void onCreate(Master.PresenterToView view) {
     Log.d(TAG, "calling onCreate() method");
     super.onCreate(MasterModel.class, this);
+
     setView(view);
 
     Log.d(TAG, "calling startingMasterScreen() method");
     // Debe llamarse al arrancar el maestro para fijar su estado inicial
+     mobservable= new MasterObservable();
     Mediator app = (Mediator) getView().getApplication();
     app.startingMasterScreen(this);
   }
@@ -92,8 +96,12 @@ public class MasterPresenter extends GenericPresenter
     // Si giramos la pantalla debemos fijar si la barra de tareas será visible o no
     if(isChangingConfiguration) {
       hideToolbar = !hideToolbar;
-    }
-  }
+      MasterPresenter event= new MasterPresenter();
+      synchronized (mobservable) {
+        mobservable.setChanged();
+        mobservable.notifyObservers(event);
+      }
+  }}
 
 
   /////////////////////////////////////////////////////////////////////////////////////
@@ -172,8 +180,12 @@ public class MasterPresenter extends GenericPresenter
     if(itemToDelete != null) {
       Log.d(TAG, "calling deleteItem() method");
       getModel().deleteItem(itemToDelete);
-    }
-  }
+      synchronized (mobservable) {
+        MasterPresenter event= new MasterPresenter();
+        mobservable.setChanged();
+        mobservable.notifyObservers(event);
+      }
+  }}
 
   /**
    * Llamado por el mediador al reiniciar el maestro para actualizar su estado en función
@@ -184,6 +196,11 @@ public class MasterPresenter extends GenericPresenter
   @Override
   public void setItemToDelete(ModelItem item) {
     itemToDelete = item;
+    synchronized (mobservable) {
+      MasterPresenter event= new MasterPresenter();
+      mobservable.setChanged();
+      mobservable.notifyObservers(event);
+    }
   }
 
   /////////////////////////////////////////////////////////////////////////////////////
@@ -280,5 +297,10 @@ public class MasterPresenter extends GenericPresenter
       }
     }
   }
-
+private class MasterObservable extends Observable {
+  @Override
+  public synchronized void setChanged(){
+    super.setChanged();
+  }
+}
 }
