@@ -68,6 +68,11 @@ public class MasterPresenter extends GenericPresenter
       Mediator app = (Mediator) getView().getApplication();
       // Debe llamarse cada vez que se reinicia el maestro para actualizar su estado
       app.resumingMasterScreen(this);
+      MasterPresenter event= new MasterPresenter();
+      synchronized (mobservable) {
+        mobservable.setChanged();
+        mobservable.notifyObservers(event);
+      }
     }
   }
 
@@ -153,6 +158,11 @@ public class MasterPresenter extends GenericPresenter
     hideProgress = true;
     checkVisibility();
     getView().setRecyclerAdapterContent(items);
+    MasterPresenter event= new MasterPresenter();
+    synchronized (mobservable) {
+      mobservable.setChanged();
+      mobservable.notifyObservers(event);
+    }
   }
 
   /**
@@ -226,11 +236,21 @@ public class MasterPresenter extends GenericPresenter
   @Override
   public void setDatabaseValidity(boolean valid) {
     getModel().setDatabaseValidity(valid);
+    MasterPresenter event= new MasterPresenter();
+    synchronized (mobservable) {
+      mobservable.setChanged();
+      mobservable.notifyObservers(event);
+    }
   }
 
   @Override
   public void setToolbarVisibility(boolean visible) {
     hideToolbar = !visible;
+    MasterPresenter event= new MasterPresenter();
+    synchronized (mobservable) {
+      mobservable.setChanged();
+      mobservable.notifyObservers(event);
+    }
   }
 
   /////////////////////////////////////////////////////////////////////////////////////
