@@ -1,6 +1,8 @@
 package es.ulpgc.eite.clean.mvp.dbmasterdetail.detail;
 
 
+import java.util.Observable;
+
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.GenericPresenter;
@@ -15,7 +17,10 @@ public class DetailPresenter extends GenericPresenter
 
 
   private boolean hideToolbar;
-
+  private static final  DetailObservable dobservable;
+ static{
+   dobservable= new DetailObservable();
+ }
   /**
    * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
    * Responsible to initialize MODEL.
@@ -51,6 +56,11 @@ public class DetailPresenter extends GenericPresenter
     // en función de la orientación actual de la pantalla
     if(configurationChangeOccurred()) {
       checkVisibility();
+      DetailPresenter event = new DetailPresenter();
+      synchronized (dobservable) {
+        dobservable.setChanged();
+        dobservable.notifyObservers(event);
+      }
     }
   }
 
@@ -77,6 +87,11 @@ public class DetailPresenter extends GenericPresenter
     if(isChangingConfiguration) {
       // Si giramos la pantalla debemos fijar si la barra de tareas será visible o no
       hideToolbar = !hideToolbar;
+      DetailPresenter event = new DetailPresenter();
+      synchronized (dobservable) {
+        dobservable.setChanged();
+        dobservable.notifyObservers(event);
+      }
     }
   }
 
@@ -103,6 +118,11 @@ public class DetailPresenter extends GenericPresenter
   public void onDeleteActionClicked() {
     Navigator app = (Navigator) getView().getApplication();
     app.backToMasterScreen(this);
+    DetailPresenter event = new DetailPresenter();
+    synchronized (dobservable) {
+      dobservable.setChanged();
+      dobservable.notifyObservers(event);
+    }
   }
 
 
@@ -127,11 +147,21 @@ public class DetailPresenter extends GenericPresenter
   @Override
   public void setItem(ModelItem item) {
     getModel().setItem(item);
+    DetailPresenter event = new DetailPresenter();
+    synchronized (dobservable) {
+      dobservable.setChanged();
+      dobservable.notifyObservers(event);
+    }
   }
 
   @Override
   public void setToolbarVisibility(boolean visible) {
     hideToolbar = !visible;
+    DetailPresenter event = new DetailPresenter();
+    synchronized (dobservable) {
+      dobservable.setChanged();
+      dobservable.notifyObservers(event);
+    }
   }
 
 
@@ -145,6 +175,11 @@ public class DetailPresenter extends GenericPresenter
   @Override
   public void destroyView() {
     getView().finishScreen();
+    DetailPresenter event = new DetailPresenter();
+    synchronized (dobservable) {
+      dobservable.setChanged();
+      dobservable.notifyObservers(event);
+    }
   }
 
   /**
@@ -170,4 +205,11 @@ public class DetailPresenter extends GenericPresenter
     }
   }
 
+
+  private static class DetailObservable extends Observable {
+    @Override
+    public synchronized void setChanged() {
+      super.setChanged();
+    }
+  }
 }
