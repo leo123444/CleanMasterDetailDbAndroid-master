@@ -114,7 +114,7 @@ public class DetailView
     toolbar.setVisibility(View.GONE);
     appbarLayout.setExpanded(false);
   }
-  public class ObservableDetail extends Observable {
+  public static class ObservableDetail extends Observable {
     private ArrayList<ObserverMasterDetail> observers;
 
     public ObservableDetail(){
@@ -127,11 +127,8 @@ public class DetailView
     }
 
     public void notifyChanges(){
-
       for(ObserverMasterDetail o:observers){
-        Object arg= new Object();
         o.update();
-
       }
   }
 

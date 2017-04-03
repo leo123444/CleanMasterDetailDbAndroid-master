@@ -9,6 +9,7 @@ import es.ulpgc.eite.clean.mvp.GenericPresenter;
 import es.ulpgc.eite.clean.mvp.dbmasterdetail.app.Mediator;
 import es.ulpgc.eite.clean.mvp.dbmasterdetail.app.ModelItem;
 import es.ulpgc.eite.clean.mvp.dbmasterdetail.app.Navigator;
+import es.ulpgc.eite.clean.mvp.dbmasterdetail.app.ObserverMasterDetail;
 
 public class DetailPresenter extends GenericPresenter
     <Detail.PresenterToView, Detail.PresenterToModel, Detail.ModelToPresenter, DetailModel>
@@ -17,6 +18,8 @@ public class DetailPresenter extends GenericPresenter
 
 
   private boolean hideToolbar;
+  private DetailView.ObservableDetail observabledetail;
+  private ObserverMasterDetail observer;
 
   /**
    * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
@@ -29,6 +32,8 @@ public class DetailPresenter extends GenericPresenter
   @Override
   public void onCreate(Detail.PresenterToView view) {
     super.onCreate(DetailModel.class, this);
+    ObserverMasterDetail observer = new ObserverMasterDetail();
+    DetailView.ObservableDetail observableDetail= new DetailView.ObservableDetail();
     setView(view);
 
     // Debe llamarse al arrancar el detalle para fijar su estado inicial.
@@ -53,7 +58,8 @@ public class DetailPresenter extends GenericPresenter
     // en función de la orientación actual de la pantalla
     if(configurationChangeOccurred()) {
       checkVisibility();
-
+      observabledetail.addObservers(observer);
+      observabledetail.notifyChanges();
 
     }
   }
@@ -81,7 +87,8 @@ public class DetailPresenter extends GenericPresenter
     if(isChangingConfiguration) {
       // Si giramos la pantalla debemos fijar si la barra de tareas será visible o no
       hideToolbar = !hideToolbar;
-
+      observabledetail.addObservers(observer);
+      observabledetail.notifyChanges();
 
     }
   }
@@ -109,7 +116,8 @@ public class DetailPresenter extends GenericPresenter
   public void onDeleteActionClicked() {
     Navigator app = (Navigator) getView().getApplication();
     app.backToMasterScreen(this);
-
+    observabledetail.addObservers(observer);
+    observabledetail.notifyChanges();
 
   }
 
@@ -135,14 +143,16 @@ public class DetailPresenter extends GenericPresenter
   @Override
   public void setItem(ModelItem item) {
     getModel().setItem(item);
-
+    observabledetail.addObservers(observer);
+    observabledetail.notifyChanges();
 
   }
 
   @Override
   public void setToolbarVisibility(boolean visible) {
     hideToolbar = !visible;
-
+    observabledetail.addObservers(observer);
+   observabledetail.notifyChanges();
 
   }
 
@@ -157,7 +167,8 @@ public class DetailPresenter extends GenericPresenter
   @Override
   public void destroyView() {
     getView().finishScreen();
-
+    observabledetail.addObservers(observer);
+    observabledetail.notifyChanges();
 
   }
 
@@ -180,6 +191,8 @@ public class DetailPresenter extends GenericPresenter
     if(isViewRunning()) {
       if (hideToolbar) {
         getView().hideToolbar();
+        observabledetail.addObservers(observer);
+         observabledetail.notifyChanges();
       }
     }
   }
