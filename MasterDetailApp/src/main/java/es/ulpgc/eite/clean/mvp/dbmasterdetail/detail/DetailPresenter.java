@@ -157,7 +157,7 @@ public class DetailPresenter extends GenericPresenter
   @Override
   public void destroyView() {
     getView().finishScreen();
-    DetailPresenter event = new DetailPresenter();
+
 
   }
 
@@ -191,4 +191,8 @@ public class DetailPresenter extends GenericPresenter
       super.setChanged();
     }
   }
+
+
+
+
 }

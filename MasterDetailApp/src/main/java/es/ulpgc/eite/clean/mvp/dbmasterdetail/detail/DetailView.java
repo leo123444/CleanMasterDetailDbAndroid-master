@@ -13,9 +13,13 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 
 
+import java.util.ArrayList;
+import java.util.Observable;
+
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.dbmasterdetail.R;
 import es.ulpgc.eite.clean.mvp.dbmasterdetail.app.ModelItem;
+import es.ulpgc.eite.clean.mvp.dbmasterdetail.app.ObserverMasterDetail;
 import es.ulpgc.eite.clean.mvp.dbmasterdetail.master.MasterView;
 
 
@@ -110,5 +114,26 @@ public class DetailView
     toolbar.setVisibility(View.GONE);
     appbarLayout.setExpanded(false);
   }
+  public class ObservableDetail extends Observable {
+    private ArrayList<ObserverMasterDetail> observers;
 
-}
+    public ObservableDetail(){
+      this.observers= new ArrayList<ObserverMasterDetail>();
+    }
+
+    public void addObservers(ObserverMasterDetail observer){
+      observers.add(observer);
+
+    }
+
+    public void notifyChanges(){
+
+      for(ObserverMasterDetail o:observers){
+        Object arg= new Object();
+        o.update();
+
+      }
+  }
+
+
+}}

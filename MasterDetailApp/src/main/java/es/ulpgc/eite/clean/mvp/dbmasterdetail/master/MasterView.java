@@ -21,10 +21,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Observable;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.dbmasterdetail.R;
 import es.ulpgc.eite.clean.mvp.dbmasterdetail.app.ModelItem;
+import es.ulpgc.eite.clean.mvp.dbmasterdetail.app.ObserverMasterDetail;
 import es.ulpgc.eite.clean.mvp.dbmasterdetail.utils.RealmRecyclerViewAdapter;
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
@@ -395,5 +397,28 @@ public class MasterView
     }
   }
   */
+  public static class ObservableMaster extends Observable {
 
-}
+    private ArrayList<ObserverMasterDetail>observers;
+   public ObservableMaster(){
+      this.observers= new ArrayList<ObserverMasterDetail>();
+    }
+
+    public void addObservers(ObserverMasterDetail observer){
+     observers.add(observer);
+
+   }
+
+    public void notifyChanges(){
+
+      for(ObserverMasterDetail o:observers){
+        Object arg= new Object();
+        o.update();
+
+    }
+  }
+
+
+
+
+}}

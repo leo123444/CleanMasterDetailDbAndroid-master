@@ -19,7 +19,7 @@ import es.ulpgc.eite.clean.mvp.dbmasterdetail.app.Navigator;
 public class MasterPresenter extends GenericPresenter
     <Master.PresenterToView, Master.PresenterToModel, Master.ModelToPresenter, MasterModel>
     implements Master.ViewToPresenter, Master.ModelToPresenter,
-    Master.MasterToDetail, Master.ToMaster, Master.DetailToMaster {
+    Master.MasterToDetail, Master.ToMaster, Master.DetailToMaster  {
 
 
   private boolean hideToolbar;
@@ -27,6 +27,8 @@ public class MasterPresenter extends GenericPresenter
   private ModelItem itemToDelete;
   //private boolean hideContent;
   private boolean hideProgress;
+    private boolean resumed;
+    private MasterView.ObservableMaster observable;
 
 
   /**
@@ -41,7 +43,7 @@ public class MasterPresenter extends GenericPresenter
   public void onCreate(Master.PresenterToView view) {
     Log.d(TAG, "calling onCreate() method");
     super.onCreate(MasterModel.class, this);
-
+     observable= new MasterView.ObservableMaster();
     setView(view);
 
     Log.d(TAG, "calling startingMasterScreen() method");
@@ -49,6 +51,7 @@ public class MasterPresenter extends GenericPresenter
 
     Mediator app = (Mediator) getView().getApplication();
     app.startingMasterScreen(this);
+      this.resumed=true;
   }
 
   /**
@@ -69,7 +72,7 @@ public class MasterPresenter extends GenericPresenter
       // Debe llamarse cada vez que se reinicia el maestro para actualizar su estado
       app.resumingMasterScreen(this);
       MasterPresenter event= new MasterPresenter();
-
+      observable.notifyChanges();
     }
   }
 
@@ -98,7 +101,7 @@ public class MasterPresenter extends GenericPresenter
     // Si giramos la pantalla debemos fijar si la barra de tareas será visible o no
     if(isChangingConfiguration) {
       hideToolbar = !hideToolbar;
-      MasterPresenter event= new MasterPresenter();
+      observable.notifyChanges();
 
   }}
 
@@ -152,7 +155,7 @@ public class MasterPresenter extends GenericPresenter
     hideProgress = true;
     checkVisibility();
     getView().setRecyclerAdapterContent(items);
-
+    observable.notifyChanges();
 
   }
 
@@ -163,6 +166,7 @@ public class MasterPresenter extends GenericPresenter
   public void onLoadItemsTaskStarted() {
     hideProgress = false;
     checkVisibility();
+    observable.notifyChanges();
   }
 
 
@@ -181,7 +185,7 @@ public class MasterPresenter extends GenericPresenter
     if(itemToDelete != null) {
       Log.d(TAG, "calling deleteItem() method");
       getModel().deleteItem(itemToDelete);
-
+      observable.notifyChanges();
   }}
 
   /**
@@ -193,7 +197,7 @@ public class MasterPresenter extends GenericPresenter
   @Override
   public void setItemToDelete(ModelItem item) {
     itemToDelete = item;
-
+   observable.notifyChanges();
   }
 
   /////////////////////////////////////////////////////////////////////////////////////
@@ -226,7 +230,7 @@ public class MasterPresenter extends GenericPresenter
   @Override
   public void setToolbarVisibility(boolean visible) {
     hideToolbar = !visible;
-
+ observable.notifyChanges();
 
   }
 
@@ -262,7 +266,9 @@ public class MasterPresenter extends GenericPresenter
     Log.d(TAG, "calling reloadItems() method");
     // Llamado para restaurar el contenido inicial de la lista y su funcionamiento es
     // semejante al encargado de cargar los datos la primera vez
-    getModel().reloadItems();
+      observable.notifyChanges();
+      getModel().reloadItems();
+
   }
 
   /**
@@ -276,7 +282,9 @@ public class MasterPresenter extends GenericPresenter
     // Si la tarea para la obtención del contenido de la lista ha finalizado,
     // el contenido estará disponible inmediatamente, sino habrá que esperar su finalización.
     // En cualquier caso, el presentador será notificado desde el modelo
-    getModel().loadItems();
+       observable.notifyChanges();
+      getModel().loadItems();
+
   }
 
 
@@ -293,6 +301,10 @@ public class MasterPresenter extends GenericPresenter
         getView().showProgress();
       }
     }
-  }}
+  }
+
+
+
+}
 
 

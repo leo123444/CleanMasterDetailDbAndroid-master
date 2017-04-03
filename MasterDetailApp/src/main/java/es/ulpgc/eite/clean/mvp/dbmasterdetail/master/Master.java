@@ -55,6 +55,8 @@ public interface Master {
     void onItemClicked(ModelItem item);
     void onRestoreActionClicked();
     void onResumingContent();
+
+
   }
 
   /**
