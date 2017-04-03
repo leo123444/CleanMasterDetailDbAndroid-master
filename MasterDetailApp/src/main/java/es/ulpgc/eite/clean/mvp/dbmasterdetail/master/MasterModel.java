@@ -26,142 +26,8 @@ public class MasterModel
 
   private static final int ITEM_COUNT = 9;
 
-  public List<ModelItem> items = new List<ModelItem>() {
-    @Override
-    public int size() {
-      return 0;
-    }
+  public List<ModelItem> items = null; // An array of items
 
-    @Override
-    public boolean isEmpty() {
-      return false;
-    }
-
-    @Override
-    public boolean contains(Object o) {
-      return false;
-    }
-
-    @NonNull
-    @Override
-    public Iterator<ModelItem> iterator() {
-      return null;
-    }
-
-    @NonNull
-    @Override
-    public Object[] toArray() {
-      return new Object[0];
-    }
-
-    @NonNull
-    @Override
-    public <T> T[] toArray(@NonNull T[] a) {
-      return null;
-    }
-
-    @Override
-    public boolean add(ModelItem modelItem) {
-      return false;
-    }
-
-    @Override
-    public boolean remove(Object o) {
-      return false;
-    }
-
-    @Override
-    public boolean containsAll(@NonNull Collection<?> c) {
-      return false;
-    }
-
-    @Override
-    public boolean addAll(@NonNull Collection<? extends ModelItem> c) {
-      return false;
-    }
-
-    @Override
-    public boolean addAll(int index, @NonNull Collection<? extends ModelItem> c) {
-      return false;
-    }
-
-    @Override
-    public boolean removeAll(@NonNull Collection<?> c) {
-      return false;
-    }
-
-    @Override
-    public boolean retainAll(@NonNull Collection<?> c) {
-      return false;
-    }
-
-    @Override
-    public void clear() {
-
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      return false;
-    }
-
-    @Override
-    public int hashCode() {
-      return 0;
-    }
-
-    @Override
-    public ModelItem get(int index) {
-      return null;
-    }
-
-    @Override
-    public ModelItem set(int index, ModelItem element) {
-      return null;
-    }
-
-    @Override
-    public void add(int index, ModelItem element) {
-
-    }
-
-    @Override
-    public ModelItem remove(int index) {
-      return null;
-    }
-
-    @Override
-    public int indexOf(Object o) {
-      return 0;
-    }
-
-    @Override
-    public int lastIndexOf(Object o) {
-      return 0;
-    }
-
-    @Override
-    public ListIterator<ModelItem> listIterator() {
-      return null;
-    }
-
-    @NonNull
-    @Override
-    public ListIterator<ModelItem> listIterator(int index) {
-      return null;
-    }
-
-    @NonNull
-    @Override
-    public List<ModelItem> subList(int fromIndex, int toIndex) {
-      return null;
-    }
-  };
-
-
-
-
-  // An array of items
   private boolean runningTask;
   private Realm realmDatabase;
   private boolean validDatabase;
@@ -180,16 +46,16 @@ public class MasterModel
     realmDatabase = Realm.getDefaultInstance();
     //validDatabase = true;
     errorMsg = "Error deleting item!";
-    ModelItem model= new ModelItem("0","1","Windows");
-    items.add(model);
-    items.add(model);
-    items.add(model);
-    items.add(model);
-    items.add(model);
-    items.add(model);
-    items.add(model);
-    items.add(model);
-    items.add(model);
+//    ModelItem model= new ModelItem("0","1","Windows");
+//    items.add(model);
+//    items.add(model);
+//    items.add(model);
+//    items.add(model);
+//    items.add(model);
+//    items.add(model);
+//    items.add(model);
+//    items.add(model);
+//    items.add(model);
 
   }
 

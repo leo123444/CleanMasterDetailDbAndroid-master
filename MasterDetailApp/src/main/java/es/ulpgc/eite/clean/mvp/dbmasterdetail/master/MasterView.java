@@ -39,7 +39,7 @@ public class MasterView
   private Toolbar toolbar;
   private RecyclerView recyclerView;
   private ProgressBar progressView;
- private ListView list;
+ //private ListView list;
 
   @Override
   protected void onCreate(Bundle savedState) {
@@ -60,9 +60,9 @@ public class MasterView
     Realm realm = Realm.getDefaultInstance();
     recyclerView.setAdapter(
         new ModelItemRecyclerViewAdapter(realm.where(ModelItem.class).findAllAsync()));
-    list=(ListView)findViewById(R.id.list);
-    List<ModelItem> content;
-ModelItem model1= new ModelItem("1","0","2");
+//    list=(ListView)findViewById(R.id.list);
+//    List<ModelItem> content;
+//ModelItem model1= new ModelItem("1","0","2");
 //    content.add(model1);
 //    content.add(model1);
 //    content.add(model1);
