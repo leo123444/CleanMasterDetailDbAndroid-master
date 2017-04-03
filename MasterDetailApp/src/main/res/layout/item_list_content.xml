@@ -16,8 +16,8 @@
 
     <TextView
         android:id="@+id/item_content"
-        android:layout_width="400dp"
-        android:layout_height="511dp"
+        android:layout_width="391dp"
+        android:layout_height="48dp"
 
         style="?android:attr/textAppearanceLarge"
         android:text="descripcion:"

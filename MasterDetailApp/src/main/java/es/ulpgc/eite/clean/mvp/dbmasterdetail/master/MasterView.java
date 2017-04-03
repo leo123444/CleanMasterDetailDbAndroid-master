@@ -143,12 +143,17 @@ public class MasterView
 
     public ModelItemRecyclerViewAdapter( OrderedRealmCollection<ModelItem> items) {
       super(items, true);
+
       this.items = items;
     }
 
 
     public void setItemList(List<ModelItem> items) {
       this.items = items;
+      ModelItem modelItem= new ModelItem("0","SO","Windows");
+      ModelItem modelItem1= new ModelItem("1","SO","Ubuntu");
+      items.add(modelItem);
+      items.add(modelItem1);
       notifyDataSetChanged();
     }
 
