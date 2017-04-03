@@ -1,6 +1,7 @@
 package es.ulpgc.eite.clean.mvp.dbmasterdetail.master;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -16,7 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
 import es.ulpgc.eite.clean.mvp.dbmasterdetail.R;
@@ -35,7 +39,7 @@ public class MasterView
   private Toolbar toolbar;
   private RecyclerView recyclerView;
   private ProgressBar progressView;
-
+ private ListView list;
 
   @Override
   protected void onCreate(Bundle savedState) {
@@ -56,9 +60,20 @@ public class MasterView
     Realm realm = Realm.getDefaultInstance();
     recyclerView.setAdapter(
         new ModelItemRecyclerViewAdapter(realm.where(ModelItem.class).findAllAsync()));
-
-
-
+    list=(ListView)findViewById(R.id.list);
+    List<ModelItem> content;
+ModelItem model1= new ModelItem("1","0","2");
+//    content.add(model1);
+//    content.add(model1);
+//    content.add(model1);
+//    content.add(model1);
+//    content.add(model1);
+//    content.add(model1);
+//    content.add(model1);
+//    content.add(model1);
+//    content.add(model1);
+//    ArrayAdapter arrayad= new ArrayAdapter(getActivityContext(),android.R.layout.simple_list_item_1,content);
+//    list.setAdapter(arrayad);
   }
 
   /**
@@ -139,21 +154,142 @@ public class MasterView
   public class ModelItemRecyclerViewAdapter
       extends RealmRecyclerViewAdapter<ModelItem, ModelItemRecyclerViewAdapter.ViewHolder> {
 
-    private List<ModelItem> items;
+    private List<ModelItem> items= new List<ModelItem>() {
+      @Override
+      public int size() {
+        return 0;
+      }
+
+      @Override
+      public boolean isEmpty() {
+        return false;
+      }
+
+      @Override
+      public boolean contains(Object o) {
+        return false;
+      }
+
+      @NonNull
+      @Override
+      public Iterator<ModelItem> iterator() {
+        return null;
+      }
+
+      @NonNull
+      @Override
+      public Object[] toArray() {
+        return new Object[0];
+      }
+
+      @NonNull
+      @Override
+      public <T> T[] toArray(@NonNull T[] a) {
+        return null;
+      }
+
+      @Override
+      public boolean add(ModelItem modelItem) {
+        return false;
+      }
+
+      @Override
+      public boolean remove(Object o) {
+        return false;
+      }
+
+      @Override
+      public boolean containsAll(@NonNull Collection<?> c) {
+        return false;
+      }
+
+      @Override
+      public boolean addAll(@NonNull Collection<? extends ModelItem> c) {
+        return false;
+      }
+
+      @Override
+      public boolean addAll(int index, @NonNull Collection<? extends ModelItem> c) {
+        return false;
+      }
+
+      @Override
+      public boolean removeAll(@NonNull Collection<?> c) {
+        return false;
+      }
+
+      @Override
+      public boolean retainAll(@NonNull Collection<?> c) {
+        return false;
+      }
+
+      @Override
+      public void clear() {
+
+      }
+
+      @Override
+      public ModelItem get(int index) {
+        return null;
+      }
+
+      @Override
+      public ModelItem set(int index, ModelItem element) {
+        return null;
+      }
+
+      @Override
+      public void add(int index, ModelItem element) {
+
+      }
+
+      @Override
+      public ModelItem remove(int index) {
+        return null;
+      }
+
+      @Override
+      public int indexOf(Object o) {
+        return 0;
+      }
+
+      @Override
+      public int lastIndexOf(Object o) {
+        return 0;
+      }
+
+      @Override
+      public ListIterator<ModelItem> listIterator() {
+        return null;
+      }
+
+      @NonNull
+      @Override
+      public ListIterator<ModelItem> listIterator(int index) {
+        return null;
+      }
+
+      @NonNull
+      @Override
+      public List<ModelItem> subList(int fromIndex, int toIndex) {
+        return null;
+      }
+    };
 
     public ModelItemRecyclerViewAdapter( OrderedRealmCollection<ModelItem> items) {
       super(items, true);
 
-      this.items = items;
+
     }
 
 
     public void setItemList(List<ModelItem> items) {
-      this.items = items;
-      ModelItem modelItem= new ModelItem("0","SO","Windows");
-      ModelItem modelItem1= new ModelItem("1","SO","Ubuntu");
-      items.add(modelItem);
-      items.add(modelItem1);
+
+//      ModelItem modelItem= new ModelItem("0","SO","Windows");
+//      ModelItem modelItem1= new ModelItem("1","SO","Ubuntu");
+//      items.add(modelItem);
+//      items.add(modelItem1);
+      this.items=items;
       notifyDataSetChanged();
     }
 

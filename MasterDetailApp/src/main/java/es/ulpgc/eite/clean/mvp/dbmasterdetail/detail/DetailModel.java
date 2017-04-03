@@ -19,6 +19,7 @@ public class DetailModel extends GenericModel<Detail.ModelToPresenter>
   @Override
   public void onCreate(Detail.ModelToPresenter presenter) {
     super.onCreate(presenter);
+
     //realmDatabase = Realm.getDefaultInstance();
   }
 
@@ -43,6 +44,7 @@ public class DetailModel extends GenericModel<Detail.ModelToPresenter>
 
   @Override
   public void setItem(ModelItem item) {
+    item= new ModelItem("0","windows","1");
     this.item = item;
   }
 

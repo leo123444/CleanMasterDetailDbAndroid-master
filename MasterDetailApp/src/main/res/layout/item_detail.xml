@@ -4,6 +4,6 @@
     style="?android:attr/textAppearanceLarge"
     android:text="descripcion"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="50dp"
     android:padding="16dp"
     android:textIsSelectable="true"/>
