@@ -58,6 +58,7 @@ public class MasterView
         new ModelItemRecyclerViewAdapter(realm.where(ModelItem.class).findAllAsync()));
 
 
+
   }
 
   /**
