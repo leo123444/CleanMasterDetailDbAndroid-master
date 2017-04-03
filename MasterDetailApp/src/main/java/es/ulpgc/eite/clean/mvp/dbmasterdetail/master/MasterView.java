@@ -9,10 +9,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import es.ulpgc.eite.clean.mvp.GenericActivity;
@@ -33,6 +36,7 @@ public class MasterView
   private RecyclerView recyclerView;
   private ProgressBar progressView;
 
+
   @Override
   protected void onCreate(Bundle savedState) {
     super.onCreate(savedState);
@@ -52,6 +56,8 @@ public class MasterView
     Realm realm = Realm.getDefaultInstance();
     recyclerView.setAdapter(
         new ModelItemRecyclerViewAdapter(realm.where(ModelItem.class).findAllAsync()));
+
+
   }
 
   /**

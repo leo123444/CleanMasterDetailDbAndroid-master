@@ -13,9 +13,9 @@ public class ModelItem extends RealmObject{
   private String details;
 
   public ModelItem() {
-    this.id = null;
-    this.content = null;
-    this.details = null;
+    this.id = "0";
+    this.content = "OS";
+    this.details = "este es un sistema operativo y aqui te damos la descripcion";
   }
 
   public ModelItem(String id, String content, String details) {

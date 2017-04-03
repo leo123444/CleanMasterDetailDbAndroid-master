@@ -27,7 +27,8 @@
                                             android:layout_marginRight="16dp"
                                             app:layoutManager="LinearLayoutManager"
                                             tools:context="es.ulpgc.eite.clean.mvp.dbmasterdetail.master.MasterView"
-                                            tools:listitem="@layout/item_list_content"/>
+                                            tools:listitem="@layout/item_list_content"
+        android:layout_weight="0.89" />
 
     <FrameLayout
         android:id="@+id/item_detail_container"

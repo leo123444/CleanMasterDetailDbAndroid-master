@@ -1,5 +1,9 @@
 package es.ulpgc.eite.clean.mvp.dbmasterdetail.detail;
 
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import es.ulpgc.eite.clean.mvp.ContextView;
 import es.ulpgc.eite.clean.mvp.Model;
 import es.ulpgc.eite.clean.mvp.Presenter;
@@ -46,6 +50,14 @@ public interface Detail {
    * Required VIEW methods available to PRESENTER
    */
   interface PresenterToView extends ContextView {
+    void onCreate(Bundle savedInstanceState);
+
+    void onResume();
+
+    boolean onCreateOptionsMenu(Menu menu);
+
+    boolean onOptionsItemSelected(MenuItem item);
+
     void finishScreen();
     void hideToolbar();
   }

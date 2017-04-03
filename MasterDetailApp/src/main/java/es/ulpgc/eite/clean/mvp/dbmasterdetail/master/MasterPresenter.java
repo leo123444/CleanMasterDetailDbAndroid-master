@@ -27,7 +27,7 @@ public class MasterPresenter extends GenericPresenter
   private ModelItem itemToDelete;
   //private boolean hideContent;
   private boolean hideProgress;
-  public  MasterObservable mobservable ;
+
 
   /**
    * Operation called during VIEW creation in {@link GenericActivity#onResume(Class, Object)}
@@ -46,7 +46,7 @@ public class MasterPresenter extends GenericPresenter
 
     Log.d(TAG, "calling startingMasterScreen() method");
     // Debe llamarse al arrancar el maestro para fijar su estado inicial
-     mobservable= new MasterObservable();
+
     Mediator app = (Mediator) getView().getApplication();
     app.startingMasterScreen(this);
   }
@@ -69,10 +69,7 @@ public class MasterPresenter extends GenericPresenter
       // Debe llamarse cada vez que se reinicia el maestro para actualizar su estado
       app.resumingMasterScreen(this);
       MasterPresenter event= new MasterPresenter();
-      synchronized (mobservable) {
-        mobservable.setChanged();
-        mobservable.notifyObservers(event);
-      }
+
     }
   }
 
@@ -102,10 +99,7 @@ public class MasterPresenter extends GenericPresenter
     if(isChangingConfiguration) {
       hideToolbar = !hideToolbar;
       MasterPresenter event= new MasterPresenter();
-      synchronized (mobservable) {
-        mobservable.setChanged();
-        mobservable.notifyObservers(event);
-      }
+
   }}
 
 
@@ -158,11 +152,8 @@ public class MasterPresenter extends GenericPresenter
     hideProgress = true;
     checkVisibility();
     getView().setRecyclerAdapterContent(items);
-    MasterPresenter event= new MasterPresenter();
-    synchronized (mobservable) {
-      mobservable.setChanged();
-      mobservable.notifyObservers(event);
-    }
+
+
   }
 
   /**
@@ -190,11 +181,7 @@ public class MasterPresenter extends GenericPresenter
     if(itemToDelete != null) {
       Log.d(TAG, "calling deleteItem() method");
       getModel().deleteItem(itemToDelete);
-      synchronized (mobservable) {
-        MasterPresenter event= new MasterPresenter();
-        mobservable.setChanged();
-        mobservable.notifyObservers(event);
-      }
+
   }}
 
   /**
@@ -206,11 +193,7 @@ public class MasterPresenter extends GenericPresenter
   @Override
   public void setItemToDelete(ModelItem item) {
     itemToDelete = item;
-    synchronized (mobservable) {
-      MasterPresenter event= new MasterPresenter();
-      mobservable.setChanged();
-      mobservable.notifyObservers(event);
-    }
+
   }
 
   /////////////////////////////////////////////////////////////////////////////////////
@@ -236,21 +219,15 @@ public class MasterPresenter extends GenericPresenter
   @Override
   public void setDatabaseValidity(boolean valid) {
     getModel().setDatabaseValidity(valid);
-    MasterPresenter event= new MasterPresenter();
-    synchronized (mobservable) {
-      mobservable.setChanged();
-      mobservable.notifyObservers(event);
-    }
+
+
   }
 
   @Override
   public void setToolbarVisibility(boolean visible) {
     hideToolbar = !visible;
-    MasterPresenter event= new MasterPresenter();
-    synchronized (mobservable) {
-      mobservable.setChanged();
-      mobservable.notifyObservers(event);
-    }
+
+
   }
 
   /////////////////////////////////////////////////////////////////////////////////////
@@ -316,11 +293,6 @@ public class MasterPresenter extends GenericPresenter
         getView().showProgress();
       }
     }
-  }
-private class MasterObservable extends Observable {
-  @Override
-  public synchronized void setChanged(){
-    super.setChanged();
-  }
-}
-}
+  }}
+
+

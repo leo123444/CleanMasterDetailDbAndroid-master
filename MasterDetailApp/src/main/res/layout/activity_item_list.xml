@@ -36,7 +36,11 @@
             android:id="@+id/progress_circle"
             android:layout_gravity="center_vertical|center_horizontal"/>
 
-        <include layout="@layout/item_list"/>
+        <include
+            android:id="@+id/OSList"
+            layout="@layout/item_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </FrameLayout>
 
 
